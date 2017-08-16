@@ -1,0 +1,532 @@
+<html>
+	<head>
+		<meta name="renderer" content="webkit">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta charset="utf-8">
+        <title>Pixi-Live2D</title>
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <meta name="format-detection" content="telphone=no, email=no" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0, minimal-ui" />
+        <!-- UC -->
+        <meta name="screen-orientation" content="landscape">
+        <meta name="full-screen" content="yes">
+        <meta name="browsermode" content="application"/>
+        <!-- QQ -->
+        <meta name="x5-orientation" content="landscape"/>
+        <meta name="x5-fullscreen" content="true"/>
+        <meta name="x5-page-mode" content="app">
+        <!-- windows phone 点击无高光 -->
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="MobileOptimized" content="320" />
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                border: 0;
+            }
+            body {
+                background: url(https://bang-dream.bushimo.jp/wp-content/themes/bandre2017/assets/images/pc/shared/bg_pattern.png) repeat;
+            }
+			
+			#app {
+				background-color: white;
+				border-right: 1px solid #e5004f;
+				border-bottom: 1px solid #e5004f;
+				height: 550px;
+				width: 450px;
+			}
+			
+			#selections {
+				position: absolute;
+				top: 10px;
+				left: 465px;
+				z-index: 1;
+			}
+			
+			select {
+				border: 1px solid rgb(247, 160, 190);
+				border-radius: 4px;
+				background-color: rgb(255, 231, 240);
+				padding: 3px 0px;
+			}
+			
+			#character {
+				margin: 5px;
+			}
+			
+			#costumes {
+				margin: 5px;
+				width: 150px;
+			}
+			
+			#expressions {
+				margin: 5px;
+				width: 150px;
+			}
+			
+			#input {
+				position: relative;
+				background-color:  rgb(236, 226, 255);
+				border: 1px solid rgb(187, 158, 255);
+				border-radius: 4px;
+				margin: 5px;
+				padding: 4px 10px;
+			}
+			
+			#input:hover {
+				background-color:  rgb(214, 196, 255);
+				border: 1px solid rgb(161, 123, 252);
+				cursor: pointer;
+			}
+        </style>
+    </head>
+    <body>
+        <div id="app"></div>
+		
+		<div id="selections">
+			<select id="character" onchange="configureDropDownLists(this,document.getElementById('costumes'),document.getElementById('expressions'))">
+				<option value="001">Toyama Kasumi</option>
+				<option value="002">Hanazono Tae</option>
+				<option value="003">Ushigome Rimi</option>
+				<option value="004">Yamabuki Saaya</option>
+				<option value="005">Ichigaya Arisa</option>
+				<option value="006">Mitake Ran</option>
+				<option value="007">Aoba Moca</option>
+				<option value="008">Uehara Himari</option>
+				<option value="009">Udagawa Tomoe</option>
+				<option value="010">Hazawa Tsugumi</option>
+				<option value="011">Tsurumaki Kokoro</option>
+				<option value="012">Seta Kaoru</option>
+				<option value="013">Kitazawa Hagumi</option>
+				<option value="014">Matsubara Kanon</option>
+				<option value="015">Okusawa Misaki/Michelle</option>
+				<option value="016">Maruyama Aya</option>
+				<option value="017">Hikawa Hina</option>
+				<option value="018">Shirasagi Chisato</option>
+				<option value="019">Yamato Maya</option>
+				<option value="020">Wakamiya Eve</option>
+				<option value="021">Minato Yukina</option>
+				<option value="022">Hikawa Sayo</option>
+				<option value="023">Imai Lisa</option>
+				<option value="024">Udagawa Ako</option>
+				<option value="025">Shirokane Rinko</option>			
+			</select>
+			
+			<select id="costumes">
+				<option value="default">Default</option>
+				<option value="initial sr">Initial 3*</option>
+				<option value="initial ssr">Initial 4*</option>
+				<option value="event 01 sr">Event 1</option>
+				<option value="event 05 ssr">Event 5</option>
+				<option value="precious summer">Precious Summer</option>
+			</select>
+			
+			<select id="expressions">
+				<option value="idle01">idle01</option>
+				<option value="idle02">idle02</option>
+				<option value="angry01">angry01</option>
+				<option value="bye01">bye01</option>
+				<option value="cry01">cry01</option>
+				<option value="eeto01">eeto01</option>
+				<option value="gattsu01">gattsu01</option>
+				<option value="hukumi01">hukumi01</option>
+				<option value="jaan01">jaan01</option>
+				<option value="kime01">kime01</option>
+				<option value="nf01">nf01</option>
+				<option value="nf02">nf02</option>
+				<option value="nf03">nf03</option>
+				<option value="nf04">nf04</option>
+				<option value="nf05">nf05</option>
+				<option value="niyaniya01">niyaniya01</option>
+				<option value="oowarai01">oowarai01</option>
+				<option value="sad01">sad01</option>
+				<option value="serious01">serious01</option>
+				<option value="shame01">shame01</option>
+				<option value="sleep01">sleep01</option>
+				<option value="sleep02">sleep02</option>
+				<option value="smile01">smile01</option>
+				<option value="smile02">smile02</option>
+				<option value="smile03">smile03</option>
+				<option value="surprised01">surprised01</option>
+				<option value="wink01">wink01</option>
+			</select>
+			
+			<button id="input" onclick = "seeModel()">See Model</button>
+		</div>
+		
+		<script type="text/javascript">
+			 function configureDropDownLists(character,costumes,expressions) {
+			var kasumicos = ['Default', 'Initial 3*', 'Initial 4*', 'Event 1', 'Event 5', 'Precious Summer'];
+			var kasumival = ['default', 'initial sr', 'initial ssr', 'event 01 sr', 'event 05 ssr', 'precious summer'];
+			var kasumimtn = ['idle01', 'idle02', 'angry01', 'bye01', 'cry01', 'eeto01', 'gattsu01', 'hukumi01', 'jaan01', 'kime01', 'nf01', 'nf02', 'nf03', 'nf04', 'nf05', 'niyaniya01', 'oowarai01', 'sad01', 'serious01', 'shame01', 'sleep01', 'sleep02', 'smile01', 'smile02', 'smile03', 'surprised01', 'wink01'];
+			
+			var taecos = ['Default', 'Initial 3*', 'Initial 4*', 'Event 4', 'Event 7', 'Event 15', 'Precious Summer'];
+			var taeval = ['default', 'initial sr', 'initial ssr', 'event 04 ssr', 'event 07 sr', 'event 15 sr', 'precious summer'];
+			var taemtn = ['idle01', 'idle02', 'angry01', 'bye01', 'cry01', 'eeto01', 'kime01', 'nf01', 'nf02', 'nf03', 'nf04', 'nf05', 'sad01', 'serious01', 'shame01', 'smile01', 'smile02', 'smile03', 'surprised01'];
+			
+			var rimicos = ['Default', 'Initial 3*', 'Initial 4*', 'Event 4', 'Event 9', 'Precious Summer'];
+			var rimival = ['default', 'initial sr', 'initial ssr', 'event 04 sr', 'event 09 ssr', 'precious summer'];
+			var rimimtn = ['idle01', 'idle02', 'ando01', 'angry01', 'awate01', 'bye01', 'cry01', 'kime01', 'nf01', 'nf02', 'nf03', 'nf04', 'nf05', 'odoodo01', 'odoodo02', 'sad01', 'serious01', 'shame01', 'smile01', 'smile02', 'smile03', 'surprised01'];
+			
+			var saayacos = ['Default', 'Initial 3*', 'Initial 4*', 'Event 4', 'Event 9', 'Event 15', 'Precious Summer'];
+			var saayaval = ['default', 'initial sr', 'initial ssr', 'event 04 sr', 'event 09 sr', 'event 15 ssr', 'precious summer'];
+			var saayamtn = ['idle01', 'idle02', 'angry01', 'bye01', 'cry01', 'kime01', 'nf01', 'nf02', 'nf03', 'nf04', 'nf05', 'sad01', 'serious01', 'shame01', 'smile01', 'smile02', 'smile03', 'smile04', 'surprised01', 'wink01'];
+			
+			var arisacos = ['Default', 'Initial 3*', 'Initial 4*', 'Event 1', 'Event 7', 'Event 15', 'Precious Summer'];
+			var arisaval = ['default', 'initial sr', 'initial ssr', 'event 01 ssr', 'event 07 sr', 'event 15 sr', 'precious summer'];
+			var arisamtn = ['idle01', 'idle02', 'angry01', 'angry02', 'angry03', 'bye01', 'cry01', 'kime01', 'nf01', 'nf02', 'nf03', 'nf04', 'nf05', 'odoodo01', 'pui01', 'sad01', 'serious01', 'shame01', 'smile01', 'smile02', 'smile03', 'surprised01'];
+			
+			var rancos = ['Default', 'Initial 3*', 'Event 5', 'Event 6', 'Precious Summer'];
+			var ranval = ['default', 'initial sr', 'event 05 ssr', 'event 06 sr', 'precious summer'];
+			var ranmtn = ['idle01', 'idle02', 'angry01', 'angry02', 'bye01', 'cry01', 'kime01', 'nf01', 'nf02', 'nf03', 'nf04', 'nf05', 'odoodo01', 'pui01', 'sad01', 'serious01', 'shame01', 'sleep01', 'sleep02', 'smile01', 'smile02', 'smile03', 'surprised01'];
+			
+			var mocacos = ['Default', 'Initial 3*', 'Event 6', 'Precious Summer'];
+			var mocaval = ['default', 'initial sr', 'event 06 ssr', 'precious summer'];
+			var mocamtn = ['idle01', 'idle02', 'angry01', 'bye01', 'cry01', 'eeto01', 'gattsu01', 'kime01', 'nf01', 'nf02', 'nf03', 'nf04', 'nf05', 'niyaniya01', 'sad01', 'serious01', 'shame01', 'smile01', 'smile02', 'smile03', 'surprised01', 'wink01'];
+			
+			var himaricos = ['Default', 'Initial 3*', 'Event 14', 'Precious Summer'];
+			var himarival = ['default', 'initial sr', 'event 14 sr', 'precious summer'];
+			var himarimtn = ['idle01', 'idle02', 'angry01', 'awate01', 'bye01', 'cry01', 'gattsu01', 'kime01', 'nf01', 'nf02', 'nf03', 'nf04', 'nf05', 'odoodo01', 'sad01', 'serious01', 'shame01', 'smile01', 'smile02', 'smile03', 'surprised01', 'wink01'];
+			
+			var tomoecos = ['Default', 'Initial 3*', 'Event 9', 'Event 12', 'Precious Summer'];
+			var tomoeval = ['default', 'initial sr', 'event 09 sr', 'event 12 ssr', 'precious summer'];
+			var tomoemtn = ['idle01', 'idle02', 'angry01', 'angry02', 'bye01', 'cry01', 'kime01', 'kime02', 'nf01', 'nf02', 'nf03', 'nf04', 'nf05', 'sad01', 'serious01', 'shame01', 'simizimi01', 'smile01', 'smile02', 'smile03', 'surprised01', 'wink01'];
+			
+			var tsugumicos = ['Default', 'Initial 3*', 'Event 6', 'Precious Summer'];
+			var tsugumival = ['default', 'initial sr', 'event 06 sr', 'precious summer'];
+			var tsugumimtn = ['ando01', 'angry01', 'awate01', 'bye01', 'cry01', 'kime01', 'nf01', 'nf02', 'nf03', 'nf04', 'nf05', 'odoodo01', 'sad01', 'serious01', 'shame01', 'sleep01', 'sleep02', 'smile01', 'smile02', 'smile03', 'surprised01'];
+			
+			var kokorocos = ['Default', 'Initial 3*', 'Event 1', 'Event 3', 'Ranger', 'Precious Summer'];
+			var kokoroval = ['default', 'initial sr', 'event 01 sr', 'event 03 ssr', 'precious summer'];
+			var kokoromtn = ['idle01', 'idle02', 'angry01', 'bye01', 'gattsu01', 'jaan01', 'kime01', 'nf01', 'nf02', 'nf03', 'nf04', 'nf05', 'oowarai01', 'sad01', 'serious01', 'shame01', 'sleep01', 'sleep02', 'smile01', 'smile02', 'surprised01', 'wink01'];
+			
+			var kaorucos = ['Default', 'Initial 3*', 'Event 3', 'Ranger', 'Precious Summer'];
+			var kaoruval = ['default', 'initial sr', 'event 03 sr', 'ranger', 'precious summer'];
+			var kaorumtn = ['idle01', 'idle02', 'angry01', 'bye01', 'cry01', 'kime01', 'kime02', 'kime03', 'kime04', 'kime05', 'nf01', 'nf02', 'nf03', 'nf04', 'nf05', 'sad01', 'serious01', 'smile01', 'surprised01', 'wink01'];
+			
+			var hagumicos = ['Default', 'Initial 3*', 'Event 12', 'Ranger', 'Precious Summer'];
+			var hagumival = ['default', 'initial sr', 'event 12 sr', 'ranger', 'precious summer'];
+			var hagumimtn = ['idle01', 'idle02', 'angry01', 'bye01', 'cry01', 'gattsu01', 'kime01', 'nf01', 'nf02', 'nf03', 'nf04', 'nf05', 'odoodo01', 'sad01', 'serious01', 'shame01', 'smile01', 'smile02', 'smile03', 'smile04', 'surprised01', 'wink01'];
+			
+			var kanoncos = ['Default', 'Initial 3*', 'Event 7', 'Ranger', 'Precious Summer'];
+			var kanonval = ['default', 'initial sr', 'event 07 ssr', 'ranger', 'precious summer'];
+			var kanonmtn = ['idle01', 'idle02', 'angry01', 'awate01', 'bye01', 'cry01', 'nf01', 'nf02', 'nf03', 'nf04', 'nf05', 'odoodo01', 'odoodo02', 'sad01', 'sad02', 'serious01', 'shame01', 'smile01', 'smile02', 'smile03', 'surprised01'];
+			
+			var misakicos = ['Default', 'Initial 3*', 'Event 3', 'Ranger','Precious Summer'];
+			var misakival = ['default', 'initial sr', 'event 03 sr', 'ranger', 'precious summer'];
+			var misakimtn = ['idle01', 'awate01', 'nf01', 'nf03', 'nf04', 'sad01', 'surprised01'];
+			
+			var ayacos = ['Default', 'Initial 3*', 'Event 8', 'Event 11', 'Practice Wear', 'Precious Summer'];
+			var ayaval = ['default', 'initial sr', 'event 08 ssr', 'event 11 sr', 'story 01', 'precious summer'];
+			var ayamtn = ['idle01', 'angry01', 'bye01', 'cry01', 'cry02', 'cry03', 'gattsu01','kime01', 'nf01', 'nf02', 'nf03', 'nf04', 'nf05', 'odoodo01', 'odoodo02', 'sad01', 'sad02', 'serious01', 'shame01', 'smile01', 'smile02', 'smile03', 'sneeze01', 'strange01', 'surprised01', 'wink01'];
+			
+			var hinacos = ['Default', 'Initial 3*', 'Event 5', 'Event 11', 'Practice Wear', 'Precious Summer'];
+			var hinaval = ['default', 'initial sr', 'event 05 sr', 'event 11 ssr', 'story 01', 'precious summer'];
+			var hinamtn = ['idle01', 'idle02', 'angry01', 'bye01', 'chuni02', 'cry01', 'eeto01', 'gattsu01', 'kime01', 'nf01', 'nf02', 'nf03', 'nf04', 'nf05', 'oowarai01', 'sad01', 'serious01', 'shame01', 'sleep01', 'sleep02', 'smile01', 'smile02', 'smile03', 'surprised01', 'wink01'];
+			
+			var chisatocos = ['Default', 'Initial 3*', 'Event 8', 'Event 13', 'Practice Wear', 'Precious Summer'];
+			var chisatoval = ['default', 'initial sr', 'event 08 sr', 'event 13 ssr', 'story 01', 'precious summer'];
+			var chisatomtn = ['idle01', 'idle02', 'angry01', 'angry02', 'bye01', 'cry01', 'kime01', 'nf01', 'nf02', 'nf03', 'nf04', 'nf05', 'pui01', 'sad01', 'serious01', 'shame01', 'smile01', 'smile02', 'smile03', 'sneeze01', 'surprised01'];
+			
+			var mayacos = ['Default', 'Initial 3*', 'Event 13', 'Practice Wear', 'Precious Summer'];
+			var mayaval = ['default', 'initial sr', 'event 13 sr', 'story 01', 'precious summer'];
+			var mayamtn = ['idle01', 'idle02', 'angry01', 'bye01', 'cry01', 'eeto01', 'gattsu01', 'kime01', 'nf01', 'nf02', 'nf03', 'nf04', 'nf05', 'odoodo01', 'sad01', 'serious01', 'shame01', 'smile01', 'smile02', 'smile03', 'smile04', 'surprised01', 'talk01', 'wink01'];
+			
+			var evecos = ['Default', 'Initial 3*', 'Event 8', 'Event 13', 'Practice Wear', 'Precious Summer'];
+			var eveval = ['default', 'initial sr', 'event 08 sr', 'event 13 sr', 'story 01', 'precious summer'];
+			var evemtn = ['idle01', 'idle02', 'angry01', 'bye01', 'cry01', 'eeto01', 'gattsu01', 'kime01', 'nf01', 'nf02', 'nf03', 'nf04', 'nf05', 'sad01', 'serious01', 'shame01', 'smile01', 'smile02', 'smile03', 'surprised01', 'wink01'];
+			
+			var yukinacos = ['Default', 'Initial 3*', 'Event 2', 'Event 10', 'Precious Summer'];
+			var yukinaval = ['default', 'initial sr', 'event 02 ssr', 'event 10 sr', 'precious summer'];
+			var yukinamtn = ['idle01', 'idle02', 'angry01', 'bye01', 'cry01', 'cry02', 'kime01', 'nekodere01', 'nf_left01', 'nf_right01', 'nf01', 'nf02', 'nf03', 'nf04', 'nf05', 'odoodo01', 'pui01', 'sad01', 'serious01', 'shame01', 'sing01', 'smile01', 'smile03', 'surprised01'];
+			
+			var sayocos = ['Default', 'Initial 3*', 'Event 11', 'Precious Summer'];
+			var sayoval = ['default', 'initial sr', 'event 11 ssr', 'precious summer'];
+			var sayomtn = ['idle01', 'idle02', 'angry01', 'angry02', 'angry03', 'bye01', 'cry01', 'cry02', 'kime01', 'nf_left01', 'nf_right01', 'nf01', 'nf02', 'nf03', 'nf04', 'nf05', 'odoodo01', 'pui01', 'sad01', 'serious01', 'shame01', 'smile01', 'smile03', 'surprised01'];
+			
+			var lisacos = ['Default', 'Initial 3*', 'Event 10', 'Event 14', 'Precious Summer'];
+			var lisaval = ['default', 'initial sr', 'event 10 sr', 'event 14 ssr', 'precious summer'];
+			var lisamtn= ['idle01', 'angry01', 'bye01', 'cry01', 'eeto01', 'gattsu01','kime01', 'nf_left01', 'nf_right01', 'nf01', 'nf02', 'nf03', 'nf04', 'nf05', 'sad01', 'serious01', 'shame01', 'smile01', 'smile02', 'smile03', 'surprised01', 'uwame01', 'wink01'];
+			
+			var akocos = ['Default', 'Initial 3*', 'Event 2', 'Event 12', 'Precious Summer'];
+			var akoval = ['default', 'initial sr', 'event 02 sr', 'event 12 ssr', 'precious summer'];
+			var akomtn = ['idle01', 'idle02', 'angry01', 'bye01', 'chuni01', 'chuni02', 'cry01', 'eeto01', 'gattsu01', 'jaan01', 'kime01', 'nf_left01', 'nf_right01', 'nf01', 'nf02', 'nf03', 'nf04', 'nf05', 'odoodo01', 'sad01', 'serious01', 'shame01', 'smile01', 'smile02', 'smile03', 'surprised01'];
+			
+			var rinkocos = ['Default', 'Initial 3*', 'Event 2', 'Event 10', 'Event 14', 'Precious Summer'];
+			var rinkoval = ['default', 'initial sr', 'event 02 sr', 'event 10 ssr', 'event 14 sr', 'precious summer'];
+			var rinkomtn = ['idle01', 'idle02', 'angry01', 'bye01', 'cry01', 'kime01', 'nf_left01', 'nf_right01', 'nf01', 'nf02', 'nf03', 'nf04', 'nf05', 'odoodo01', 'odoodo02', 'sad01', 'serious01', 'shame01', 'smile01', 'smile02', 'smile03', 'surprised01'];
+			
+			switch (character.value) {
+				case '001':
+					costumes.options.length = 0;
+					for (i = 0; i < kasumicos.length; i++) {
+						createOption(costumes, kasumival[i], kasumicos[i]);
+					}
+					expressions.options.length = 0;
+					for (i = 0; i < kasumimtn.length; i++) {
+						createOption(expressions, kasumimtn[i], kasumimtn[i]);
+					}
+					break;
+				case '002':
+					costumes.options.length = 0;
+					for (i = 0; i < taecos.length; i++) {
+						createOption(costumes, taeval[i], taecos[i]);
+					}
+					expressions.options.length = 0;
+					for (i = 0; i < taemtn.length; i++) {
+						createOption(expressions, taemtn[i], taemtn[i]);
+					}
+					break;
+				case '003':
+					costumes.options.length = 0;
+					for (i = 0; i < rimicos.length; i++) {
+						createOption(costumes, rimival[i], rimicos[i]);
+					}
+					expressions.options.length = 0;
+					for (i = 0; i < rimimtn.length; i++) {
+						createOption(expressions, rimimtn[i], rimimtn[i]);
+					}
+					break;
+				case '004':
+					costumes.options.length = 0;
+					for (i = 0; i < saayacos.length; i++) {
+						createOption(costumes, saayaval[i], saayacos[i]);
+					}
+					expressions.options.length = 0;
+					for (i = 0; i < saayamtn.length; i++) {
+						createOption(expressions, saayamtn[i], saayamtn[i]);
+					}
+					break;
+				case '005':
+					costumes.options.length = 0;
+					for (i = 0; i < arisacos.length; i++) {
+						createOption(costumes, arisaval[i], arisacos[i]);
+					}
+					expressions.options.length = 0;
+					for (i = 0; i < arisamtn.length; i++) {
+						createOption(expressions, arisamtn[i], arisamtn[i]);
+					}
+					break;
+				case '006':
+					costumes.options.length = 0;
+					for (i = 0; i < rancos.length; i++) {
+						createOption(costumes, ranval[i], rancos[i]);
+					}
+					expressions.options.length = 0;
+					for (i = 0; i < ranmtn.length; i++) {
+						createOption(expressions, ranmtn[i], ranmtn[i]);
+					}
+					break;
+				case '007':
+					costumes.options.length = 0;
+					for (i = 0; i < mocacos.length; i++) {
+						createOption(costumes, mocaval[i], mocacos[i]);
+					}
+					expressions.options.length = 0;
+					for (i = 0; i < mocamtn.length; i++) {
+						createOption(expressions, mocamtn[i], mocamtn[i]);
+					}
+					break;
+				case '008':
+					costumes.options.length = 0;
+					for (i = 0; i < himaricos.length; i++) {
+						createOption(costumes, himarival[i], himaricos[i]);
+					}
+					expressions.options.length = 0;
+					for (i = 0; i < himarimtn.length; i++) {
+						createOption(expressions, himarimtn[i], himarimtn[i]);
+					}
+					break;
+				case '009':
+					costumes.options.length = 0;
+					for (i = 0; i < tomoecos.length; i++) {
+						createOption(costumes, tomoeval[i], tomoecos[i]);
+					}
+					expressions.options.length = 0;
+					for (i = 0; i < tomoemtn.length; i++) {
+						createOption(expressions, tomoemtn[i], tomoemtn[i]);
+					}
+					break;
+				case '010':
+					costumes.options.length = 0;
+					for (i = 0; i < tsugumicos.length; i++) {
+						createOption(costumes, tsugumival[i], tsugumicos[i]);
+					}
+					expressions.options.length = 0;
+					for (i = 0; i < tsugumimtn.length; i++) {
+						createOption(expressions, tsugumimtn[i], tsugumimtn[i]);
+					}
+					break;
+				case '011':
+					costumes.options.length = 0;
+					for (i = 0; i < kokorocos.length; i++) {
+						createOption(costumes, kokoroval[i], kokorocos[i]);
+					}
+					expressions.options.length = 0;
+					for (i = 0; i < kokoromtn.length; i++) {
+						createOption(expressions, kokoromtn[i], kokoromtn[i]);
+					}
+					break;
+				case '012':
+					costumes.options.length = 0;
+					for (i = 0; i < kaorucos.length; i++) {
+						createOption(costumes, kaoruval[i], kaorucos[i]);
+					}
+					expressions.options.length = 0;
+					for (i = 0; i < kaorumtn.length; i++) {
+						createOption(expressions, kaorumtn[i], kaorumtn[i]);
+					}
+					break;
+				case '013':
+					costumes.options.length = 0;
+					for (i = 0; i < hagumicos.length; i++) {
+						createOption(costumes, hagumival[i], hagumicos[i]);
+					}
+					expressions.options.length = 0;
+					for (i = 0; i < hagumimtn.length; i++) {
+						createOption(expressions, hagumimtn[i], hagumimtn[i]);
+					}
+					break;
+				case '014':
+					costumes.options.length = 0;
+					for (i = 0; i < kanoncos.length; i++) {
+						createOption(costumes, kanonval[i], kanoncos[i]);
+					}
+					expressions.options.length = 0;
+					for (i = 0; i < kanonmtn.length; i++) {
+						createOption(expressions, kanonmtn[i], kanonmtn[i]);
+					}
+					break;
+				case '015':
+					costumes.options.length = 0;
+					for (i = 0; i < misakicos.length; i++) {
+						createOption(costumes, misakival[i], misakicos[i]);
+					}
+					expressions.options.length = 0;
+					for (i = 0; i < misakimtn.length; i++) {
+						createOption(expressions, misakimtn[i], misakimtn[i]);
+					}
+					break;
+				case '016':
+					costumes.options.length = 0;
+					for (i = 0; i < ayacos.length; i++) {
+						createOption(costumes, ayaval[i], ayacos[i]);
+					}
+					expressions.options.length = 0;
+					for (i = 0; i < ayamtn.length; i++) {
+						createOption(expressions, ayamtn[i], ayamtn[i]);
+					}
+					break;
+				case '017':
+					costumes.options.length = 0;
+					for (i = 0; i < hinacos.length; i++) {
+						createOption(costumes, hinaval[i], hinacos[i]);
+					}
+					expressions.options.length = 0;
+					for (i = 0; i < hinamtn.length; i++) {
+						createOption(expressions, hinamtn[i], hinamtn[i]);
+					}
+					break;
+				case '018':
+					costumes.options.length = 0;
+					for (i = 0; i < chisatocos.length; i++) {
+						createOption(costumes, chisatoval[i], chisatocos[i]);
+					}
+					expressions.options.length = 0;
+					for (i = 0; i < chisatomtn.length; i++) {
+						createOption(expressions, chisatomtn[i], chisatomtn[i]);
+					}
+					break;
+				case '019':
+					costumes.options.length = 0;
+					for (i = 0; i < mayacos.length; i++) {
+						createOption(costumes, mayaval[i], mayacos[i]);
+					}
+					expressions.options.length = 0;
+					for (i = 0; i < mayamtn.length; i++) {
+						createOption(expressions, mayamtn[i], mayamtn[i]);
+					}
+					break;
+				case '020':
+					costumes.options.length = 0;
+					for (i = 0; i < evecos.length; i++) {
+						createOption(costumes, eveval[i], evecos[i]);
+					}
+					expressions.options.length = 0;
+					for (i = 0; i < evemtn.length; i++) {
+						createOption(expressions, evemtn[i], evemtn[i]);
+					}
+					break;
+				case '021':
+					costumes.options.length = 0;
+					for (i = 0; i < yukinacos.length; i++) {
+						createOption(costumes, yukinaval[i], yukinacos[i]);
+					}
+					expressions.options.length = 0;
+					for (i = 0; i < yukinamtn.length; i++) {
+						createOption(expressions, yukinamtn[i], yukinamtn[i]);
+					}
+					break;
+				case '022':
+					costumes.options.length = 0;
+					for (i = 0; i < sayocos.length; i++) {
+						createOption(costumes, sayoval[i], sayocos[i]);
+					}
+					expressions.options.length = 0;
+					for (i = 0; i < sayomtn.length; i++) {
+						createOption(expressions, sayomtn[i], sayomtn[i]);
+					}
+					break;
+				case '023':
+					costumes.options.length = 0;
+					for (i = 0; i < lisacos.length; i++) {
+						createOption(costumes, lisaval[i], lisacos[i]);
+					}
+					expressions.options.length = 0;
+					for (i = 0; i < lisamtn.length; i++) {
+						createOption(expressions, lisamtn[i], lisamtn[i]);
+					}
+					break;
+				case '024':
+					costumes.options.length = 0;
+					for (i = 0; i < akocos.length; i++) {
+						createOption(costumes, akoval[i], akocos[i]);
+					}
+					expressions.options.length = 0;
+					for (i = 0; i < akomtn.length; i++) {
+						createOption(expressions, akomtn[i], akomtn[i]);
+					}
+					break;
+				case '025':
+					costumes.options.length = 0;
+					for (i = 0; i < rinkocos.length; i++) {
+						createOption(costumes, rinkoval[i], rinkocos[i]);
+					}
+					expressions.options.length = 0;
+					for (i = 0; i < rinkomtn.length; i++) {
+						createOption(expressions, rinkomtn[i], rinkomtn[i]);
+					}
+					break;
+				default:
+					costumes.options.length = 0;
+					expressions.options.length = 0;
+					break;
+			}
+
+		}
+
+			function createOption(ddl, value, text) {
+				var opt = document.createElement('option');
+				opt.value = value;
+				opt.text = text;
+				ddl.options.add(opt);
+			}
+		</script>
+		
+		<script type="text/javascript" src="index.js" charset="utf-8"></script>
+    </body>
+
+</html>
