@@ -3,7 +3,7 @@
 		<meta name="renderer" content="webkit">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta charset="utf-8">
-        <title>Pixi-Live2D</title>
+        <title>BanG Dream! Live2D Viewer</title>
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black" />
@@ -41,7 +41,7 @@
 			
 			#selections {
 				position: absolute;
-				top: 30px;
+				top: 10px;
 				left: 465px;
 				z-index: 1;
 			}
@@ -82,19 +82,21 @@
 				cursor: pointer;
 			}
 			
-			#info{
-				position: absolute;
-				top: 10px;
-				left: 470px;
+			#info {
+				margin: -15px 5px;
 			}
+			
         </style>
     </head>
     <body>
         <div id="app"></div>
 		
-		<p id="info">To load a model, click the "See Model" Button!</p>
-		
 		<div id="selections">
+			
+			<p id="info">To load a model, click the "See Model" Button!</p>
+			
+			</br>
+			
 			<select id="character" onchange="configureDropDownLists(this,document.getElementById('costumes'),document.getElementById('expressions'))">
 				<option value="001">Toyama Kasumi</option>
 				<option value="002">Hanazono Tae</option>
